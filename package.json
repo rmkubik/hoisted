@@ -1,6 +1,6 @@
 {
-  "name": "phaser-npm-webpack-typescript-starter-project",
-  "productName": "phaser-npm-webpack-typescript-starter-project",
+  "name": "hoisted",
+  "productName": "hoisted",
   "version": "1.7.12",
   "main": "electron-main.js",
   "scripts": {
@@ -22,13 +22,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rroylance/phaser-npm-webpack-typescript-starter-project.git"
+    "url": "git+https://github.com/rmkubik/hoisted.git"
   },
-  "author": "Richard Roylance <https://github.com/rroylance>",
+  "author": "Ryan Kubik <https://github.com/rmkubik>",
   "bugs": {
-    "url": "https://github.com/rroylance/phaser-npm-webpack-typescript-starter-project/issues"
+    "url": "https://github.com/rmkubik/hoisted/issues"
   },
-  "homepage": "https://github.com/rroylance/phaser-npm-webpack-typescript-starter-project#readme",
+  "homepage": "https://github.com/rmkubik/hoisted#readme",
   "devDependencies": {
     "@types/node": "7.0.13",
     "clean-webpack-plugin": "0.1.16",
