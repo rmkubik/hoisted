@@ -153,7 +153,11 @@ export namespace BitmapFonts {
 }
 
 export namespace JSON {
-    class IExistSoTypeScriptWillNotComplainAboutAnEmptyNamespace {}
+    export class JsonLevel1 {
+        static getName(): string { return 'level1'; }
+
+        static getJSON(): string { return require('assets/json/level1.json'); }
+    }
 }
 
 export namespace XML {
