@@ -1,4 +1,5 @@
 import * as Assets from '../assets';
+import '../prefabs/prefab.ts'
 
 export default class Title extends Phaser.State {
     private backgroundTemplateSprite: Phaser.Sprite = null;
@@ -62,7 +63,7 @@ export default class Title extends Phaser.State {
             availableSFX.Laser9
         ];
 
-        this.game.sound.play(Assets.Audio.AudioMusic.getName(), 0.2, true);
+        // this.game.sound.play(Assets.Audio.AudioMusic.getName(), 0.2, true);
 
         this.backgroundTemplateSprite.inputEnabled = true;
         this.backgroundTemplateSprite.events.onInputDown.add(() => {
@@ -70,5 +71,7 @@ export default class Title extends Phaser.State {
         });
 
         this.game.camera.flash(0x000000, 1000);
+
+        this.game.state.start('game');
     }
 }
