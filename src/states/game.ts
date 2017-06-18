@@ -1,6 +1,7 @@
 import Player from '../prefabs/player';
 import Petard from '../prefabs/petard';
 import Tile from '../prefabs/tile';
+import LevelData from '../prefabs/levelData';
 import * as Assets from '../assets';
 
 export default class Game extends Phaser.State {
@@ -8,6 +9,7 @@ export default class Game extends Phaser.State {
     private cursors: any;
     private player: Player;
     private petardGroup: Phaser.Group;
+    private tileGroup: Phaser.Group;
 
     public create(): void {
         let backgroundTemplateSprite: Phaser.Sprite = this.game.add.sprite(
@@ -17,13 +19,15 @@ export default class Game extends Phaser.State {
         );
         backgroundTemplateSprite.anchor.setTo(0.5);
 
+        this.tileGroup = this.createTileGroup(Assets.JSON.JsonLevel1.getName());
+
         this.player = new Player(this.game, new Phaser.Point(20, 20));
         this.game.add.existing(this.player);
         this.cursors = this.game.input.keyboard.createCursorKeys();
 
         this.petardGroup = new Phaser.Group(this.game);
-        this.petardGroup.enableBody = true;
-        this.petardGroup.physicsBodyType = Phaser.Physics.ARCADE;
+        // this.petardGroup.enableBody = true;
+        // this.petardGroup.physicsBodyType = Phaser.Physics.ARCADE;
 
         this.game.input.onUp.add((pointer: Phaser.Pointer) => {
             let petard: Petard = new Petard(this.game, this.player.position, Phaser.Timer.SECOND * 5, 300, 800);
@@ -51,9 +55,40 @@ export default class Game extends Phaser.State {
         });
     }
 
+    private createTileGroup(levelKey: string): Phaser.Group {
+        let level: LevelData = this.game.cache.getJSON(levelKey);
+        let tileGroup: Phaser.Group = new Phaser.Group(this.game);
+        for (let row: number = 0; row < level.height; row++) {
+            for (let col: number = 0; col < level.width; col++) {
+                switch (level.data[(row * level.width) + col]) {
+                    case 0:
+
+                        break;
+                    case 1:
+                        tileGroup.add(
+                            new Tile(
+                                this.game,
+                                new Phaser.Point(
+                                    col * level.tile_size,
+                                    row * level.tile_size
+                                )
+                            )
+                        )
+                        break;
+                    default:
+                        console.warn(`Invalid tile id at row: ${row}, col: ${col}`);
+                        break;
+                }
+            }
+        }
+        return tileGroup;
+    }
+
     public update(): void {
         this.game.physics.arcade.collide(this.petardGroup);
         this.game.physics.arcade.collide(this.player, this.petardGroup);
+        this.game.physics.arcade.collide(this.player, this.tileGroup);
+        this.game.physics.arcade.collide(this.tileGroup, this.petardGroup);
 
         let allCursorsUp: boolean = true;
 

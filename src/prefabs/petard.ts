@@ -22,6 +22,7 @@ export default class Petard extends Prefab {
         });
         this.explosionRadius = explosionRadius;
         this.explosionPower = explosionPower;
+        this.game.physics.enable(this, Phaser.Physics.ARCADE);
         this.body.collideWorldBounds = true;
         this.body.bounce.setTo(0.2);
         this.body.gravity.set(0, 180);
