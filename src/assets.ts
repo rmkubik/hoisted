@@ -168,6 +168,11 @@ export namespace JSON {
 
         static getJSON(): string { return require('assets/json/level1.json'); }
     }
+    export class JsonLevel10 {
+        static getName(): string { return 'level10'; }
+
+        static getJSON(): string { return require('assets/json/level10.json'); }
+    }
     export class JsonLevel2 {
         static getName(): string { return 'level2'; }
 
