@@ -183,6 +183,11 @@ export namespace JSON {
 
         static getJSON(): string { return require('assets/json/level4.json'); }
     }
+    export class JsonLevel5 {
+        static getName(): string { return 'level5'; }
+
+        static getJSON(): string { return require('assets/json/level5.json'); }
+    }
 }
 
 export namespace XML {
