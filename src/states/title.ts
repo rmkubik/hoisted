@@ -72,6 +72,6 @@ export default class Title extends Phaser.State {
 
         this.game.camera.flash(0x000000, 1000);
 
-        this.game.state.start('game');
+        this.game.state.start('game', true, false, Assets.JSON.JsonLevel1.getName());
     }
 }

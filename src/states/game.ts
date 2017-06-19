@@ -2,6 +2,7 @@ import Player from '../prefabs/player';
 import Petard from '../prefabs/petard';
 import Tile from '../prefabs/tile';
 import LevelData from '../prefabs/levelData';
+import Goal from '../prefabs/goal';
 import * as Assets from '../assets';
 
 export default class Game extends Phaser.State {
@@ -12,7 +13,11 @@ export default class Game extends Phaser.State {
     private tileGroup: Phaser.Group;
     private spaceKey: Phaser.Key;
     private wasMouseDownPressed: boolean;
+    private levelKey: string;
 
+    public init(levelKey: string): void {
+        this.levelKey = levelKey;
+    }
 
     public create(): void {
         let backgroundTemplateSprite: Phaser.Sprite = this.game.add.sprite(
@@ -22,7 +27,7 @@ export default class Game extends Phaser.State {
         );
         backgroundTemplateSprite.anchor.setTo(0.5);
 
-        this.tileGroup = this.createTileGroup(Assets.JSON.JsonLevel1.getName());
+        this.tileGroup = this.createTileGroup(this.levelKey);
 
         this.player = new Player(this.game, new Phaser.Point(20, 20));
         this.game.add.existing(this.player);
