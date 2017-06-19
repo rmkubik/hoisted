@@ -11,6 +11,7 @@ export default class Game extends Phaser.State {
     private petardGroup: Phaser.Group;
     private tileGroup: Phaser.Group;
     private spaceKey: Phaser.Key;
+    private wasMouseDownPressed: boolean;
 
 
     public create(): void {
@@ -27,33 +28,41 @@ export default class Game extends Phaser.State {
         this.game.add.existing(this.player);
         this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
+        this.wasMouseDownPressed = false;
+
         this.petardGroup = new Phaser.Group(this.game);
         // this.petardGroup.enableBody = true;
         // this.petardGroup.physicsBodyType = Phaser.Physics.ARCADE;
+        this.game.input.onDown.add(() => {
+            this.wasMouseDownPressed = true;
+        });
 
         this.game.input.onUp.add((pointer: Phaser.Pointer) => {
-            let petard: Petard = new Petard(this.game, this.player.position, Phaser.Timer.SECOND * 5, 300, 800);
-            this.petardGroup.add(petard);
-            this.game.physics.arcade.velocityFromRotation(
-                this.game.physics.arcade.angleToPointer(petard, pointer),
-                (pointer.duration / Phaser.Timer.SECOND) * 600 + 400,
-                petard.body.velocity
-            );
+            if (this.wasMouseDownPressed) {
+                let petard: Petard = new Petard(this.game, this.player.position, Phaser.Timer.SECOND * 5, 300, 800);
+                this.petardGroup.add(petard);
+                this.game.physics.arcade.velocityFromRotation(
+                    this.game.physics.arcade.angleToPointer(petard, pointer),
+                    (pointer.duration / Phaser.Timer.SECOND) * 600 + 400,
+                    petard.body.velocity
+                );
 
-            petard.onExplode.add((petard: Petard) => {
-                petard.kill();
-                const distance = this.game.physics.arcade.distanceBetween(petard, this.player);
-                let velocityAdjust: Phaser.Point = new Phaser.Point();
-                if (distance <= petard.explosionRadius) {
-                    this.game.physics.arcade.velocityFromRotation(
-                        this.game.physics.arcade.angleBetween(petard, this.player),
-                        petard.explosionPower/2 * (1 - distance/petard.explosionRadius) + petard.explosionPower/2,
-                        velocityAdjust
-                    );
-                    this.player.body.velocity.x += velocityAdjust.x;
-                    this.player.body.velocity.y += velocityAdjust.y;
-                }
-            });
+                petard.onExplode.add((petard: Petard) => {
+                    petard.kill();
+                    const distance = this.game.physics.arcade.distanceBetween(petard, this.player);
+                    let velocityAdjust: Phaser.Point = new Phaser.Point();
+                    if (distance <= petard.explosionRadius) {
+                        this.game.physics.arcade.velocityFromRotation(
+                            this.game.physics.arcade.angleBetween(petard, this.player),
+                            petard.explosionPower/2 * (1 - distance/petard.explosionRadius) + petard.explosionPower/2,
+                            velocityAdjust
+                        );
+                        this.player.body.velocity.x += velocityAdjust.x;
+                        this.player.body.velocity.y += velocityAdjust.y;
+                    }
+                });
+                this.wasMouseDownPressed = false;
+            }
         });
     }
 
