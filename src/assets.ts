@@ -203,6 +203,11 @@ export namespace JSON {
 
         static getJSON(): string { return require('assets/json/level8.json'); }
     }
+    export class JsonLevel9 {
+        static getName(): string { return 'level9'; }
+
+        static getJSON(): string { return require('assets/json/level9.json'); }
+    }
 }
 
 export namespace XML {
