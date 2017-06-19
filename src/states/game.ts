@@ -11,6 +11,7 @@ export default class Game extends Phaser.State {
     private player: Player;
     private petardGroup: Phaser.Group;
     private tileGroup: Phaser.Group;
+    private goalGroup: Phaser.Group;
     private spaceKey: Phaser.Key;
     private wasMouseDownPressed: boolean;
     private levelKey: string;
@@ -26,6 +27,9 @@ export default class Game extends Phaser.State {
             Assets.Images.ImagesBackgroundTemplate.getName()
         );
         backgroundTemplateSprite.anchor.setTo(0.5);
+
+        this.goalGroup = new Phaser.Group(this.game);
+
 
         this.tileGroup = this.createTileGroup(this.levelKey);
 
@@ -91,6 +95,18 @@ export default class Game extends Phaser.State {
                             )
                         )
                         break;
+                    case 2:
+                        this.goalGroup.add(
+                            new Goal(
+                                this.game,
+                                new Phaser.Point(
+                                    col * level.tile_size,
+                                    row * level.tile_size
+                                ),
+                                level.nextLevelKey
+                            )
+                        )
+                        break;
                     default:
                         console.warn(`Invalid tile id at row: ${row}, col: ${col}`);
                         break;
@@ -105,6 +121,9 @@ export default class Game extends Phaser.State {
         this.game.physics.arcade.collide(this.player, this.petardGroup);
         this.game.physics.arcade.collide(this.player, this.tileGroup);
         this.game.physics.arcade.collide(this.tileGroup, this.petardGroup);
+        this.game.physics.arcade.collide(this.player, this.goalGroup, (player: Player, goal: Goal) => {
+            this.game.state.restart(true, false, goal.nextLevelKey);
+        });
 
         if (this.spaceKey.isDown) {
             this.petardGroup.forEachAlive((petard) => {
