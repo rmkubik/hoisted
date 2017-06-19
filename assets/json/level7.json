@@ -2,7 +2,7 @@
     "height": 15,
     "width": 20,
     "tile_size": 32,
-    "nextLevelKey": "level1",
+    "nextLevelKey": "level8",
     "data": [
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 1, 0, 0,
