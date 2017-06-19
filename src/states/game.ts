@@ -10,6 +10,8 @@ export default class Game extends Phaser.State {
     private player: Player;
     private petardGroup: Phaser.Group;
     private tileGroup: Phaser.Group;
+    private spaceKey: Phaser.Key;
+
 
     public create(): void {
         let backgroundTemplateSprite: Phaser.Sprite = this.game.add.sprite(
@@ -23,7 +25,7 @@ export default class Game extends Phaser.State {
 
         this.player = new Player(this.game, new Phaser.Point(20, 20));
         this.game.add.existing(this.player);
-        this.cursors = this.game.input.keyboard.createCursorKeys();
+        this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
         this.petardGroup = new Phaser.Group(this.game);
         // this.petardGroup.enableBody = true;
@@ -90,27 +92,11 @@ export default class Game extends Phaser.State {
         this.game.physics.arcade.collide(this.player, this.tileGroup);
         this.game.physics.arcade.collide(this.tileGroup, this.petardGroup);
 
-        let allCursorsUp: boolean = true;
-
-        if (this.cursors.down.isDown) {
-            this.player.body.velocity.y += 150;
-            allCursorsUp = false;
+        if (this.spaceKey.isDown) {
+            this.petardGroup.forEachAlive((petard) => {
+                petard.onExplode.dispatch(petard);
+            })
         }
-        if (this.cursors.up.isDown) {
-            this.player.body.velocity.y += -150;
-            allCursorsUp = false;
-        }
-        if (this.cursors.left.isDown) {
-            this.player.body.velocity.x += -150;
-            allCursorsUp = false;
-        }
-        if (this.cursors.right.isDown) {
-            this.player.body.velocity.x += 150;
-            allCursorsUp = false;
-        }
-        // if (allCursorsUp) {
-        //     this.player.body.acceleration.setTo(0,0);
-        // }
     }
 
 }

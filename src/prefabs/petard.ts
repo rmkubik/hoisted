@@ -18,7 +18,9 @@ export default class Petard extends Prefab {
         this.anchor.setTo(0.5);
         this.onExplode = new Phaser.Signal();
         this.game.time.events.add(fuseLength, () => {
-            this.onExplode.dispatch(this);
+            if (this.alive) {
+                this.onExplode.dispatch(this);
+            }
         });
         this.explosionRadius = explosionRadius;
         this.explosionPower = explosionPower;
