@@ -102,7 +102,8 @@ export default class Game extends Phaser.State {
                                 new Phaser.Point(
                                     col * level.tile_size,
                                     row * level.tile_size
-                                )
+                                ),
+                                this.game.rnd.integerInRange(0, 1)
                             )
                         )
                         break;

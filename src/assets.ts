@@ -16,6 +16,11 @@ export namespace Images {
 
         static getPNG(): string { return require('assets/images/bomb.png'); }
     }
+    export class ImagesGoal {
+        static getName(): string { return 'goal'; }
+
+        static getPNG(): string { return require('assets/images/goal.png'); }
+    }
     export class ImagesNinja {
         static getName(): string { return 'ninja'; }
 
@@ -167,6 +172,11 @@ export namespace JSON {
         static getName(): string { return 'level2'; }
 
         static getJSON(): string { return require('assets/json/level2.json'); }
+    }
+    export class JsonLevel3 {
+        static getName(): string { return 'level3'; }
+
+        static getJSON(): string { return require('assets/json/level3.json'); }
     }
 }
 
