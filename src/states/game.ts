@@ -31,6 +31,8 @@ export default class Game extends Phaser.State {
         );
         backgroundTemplateSprite.anchor.setTo(0.5);
 
+        this.game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
+
         this.goalGroup = new Phaser.Group(this.game);
         this.bombCount = 0;
 
@@ -45,8 +47,14 @@ export default class Game extends Phaser.State {
         this.petardGroup = new Phaser.Group(this.game);
         // this.petardGroup.enableBody = true;
         // this.petardGroup.physicsBodyType = Phaser.Physics.ARCADE;
-        this.game.input.onDown.add(() => {
-            this.wasMouseDownPressed = true;
+        this.game.input.onDown.add((pointer: Phaser.Pointer) => {
+            if (pointer.rightButton.isDown) {
+                this.petardGroup.forEachAlive((petard) => {
+                    petard.onExplode.dispatch(petard);
+                })
+            } else {
+                this.wasMouseDownPressed = true;
+            }
         });
 
         this.game.input.onUp.add((pointer: Phaser.Pointer) => {
