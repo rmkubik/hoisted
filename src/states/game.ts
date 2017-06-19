@@ -20,6 +20,7 @@ export default class Game extends Phaser.State {
 
     public init(levelKey: string): void {
         this.levelKey = levelKey;
+        this.game.stage.backgroundColor = "#31a2f2";
     }
 
     public create(): void {
@@ -81,7 +82,8 @@ export default class Game extends Phaser.State {
         this.bombCountText = this.game.add.text(0, 0, `Bombs Used: ${this.bombCount}`,
             {
                 font: "Barrio",
-                fontSize:30
+                fontSize:30,
+                fill: "white"
             }
         );
     }
