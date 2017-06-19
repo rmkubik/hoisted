@@ -15,6 +15,8 @@ export default class Game extends Phaser.State {
     private spaceKey: Phaser.Key;
     private wasMouseDownPressed: boolean;
     private levelKey: string;
+    private bombCount: number;
+    private bombCountText: Phaser.Text;
 
     public init(levelKey: string): void {
         this.levelKey = levelKey;
@@ -24,12 +26,12 @@ export default class Game extends Phaser.State {
         let backgroundTemplateSprite: Phaser.Sprite = this.game.add.sprite(
             this.game.world.centerX,
             this.game.world.centerY,
-            Assets.Images.ImagesBackgroundTemplate.getName()
+            Assets.Images.ImagesBackground.getName()
         );
         backgroundTemplateSprite.anchor.setTo(0.5);
 
         this.goalGroup = new Phaser.Group(this.game);
-
+        this.bombCount = 0;
 
         this.tileGroup = this.createTileGroup(this.levelKey);
 
@@ -70,9 +72,18 @@ export default class Game extends Phaser.State {
                         this.player.body.velocity.y += velocityAdjust.y;
                     }
                 });
+                this.bombCount++;
+                this.bombCountText.text = `Bombs Used: ${this.bombCount}`;
                 this.wasMouseDownPressed = false;
             }
         });
+
+        this.bombCountText = this.game.add.text(0, 0, `Bombs Used: ${this.bombCount}`,
+            {
+                font: "Barrio",
+                fontSize:30
+            }
+        );
     }
 
     private createTileGroup(levelKey: string): Phaser.Group {
