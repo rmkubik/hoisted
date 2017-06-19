@@ -38,7 +38,7 @@ export default class Game extends Phaser.State {
 
         this.player = new Player(this.game, new Phaser.Point(20, 20));
         this.game.add.existing(this.player);
-        this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
 
         this.wasMouseDownPressed = false;
 
