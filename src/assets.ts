@@ -6,6 +6,11 @@ export namespace Images {
 
         static getPNG(): string { return require('assets/images/background_template.png'); }
     }
+    export class ImagesBackground {
+        static getName(): string { return 'background'; }
+
+        static getPNG(): string { return require('assets/images/background.png'); }
+    }
     export class ImagesBomb {
         static getName(): string { return 'bomb'; }
 
