@@ -178,6 +178,11 @@ export namespace JSON {
 
         static getJSON(): string { return require('assets/json/level3.json'); }
     }
+    export class JsonLevel4 {
+        static getName(): string { return 'level4'; }
+
+        static getJSON(): string { return require('assets/json/level4.json'); }
+    }
 }
 
 export namespace XML {
